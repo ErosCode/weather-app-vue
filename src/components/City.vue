@@ -3,7 +3,7 @@
         <i v-if="edit" @click="removeCity" class="fa fa-trash-alt edit" ref="edit"></i>
         <span>{{ this.city.city }}</span>
         <div class="weather">
-            <span>{{ Math.round(this.city.currentWeather.main.temp)}}&deg;</span>
+            <span>{{farToDeg}}&deg;C</span>
             <img :src="require(`../../public/conditions/${this.city.currentWeather.weather[0].icon}.svg`)" alt="">
         </div>
         <div class="video">
@@ -39,6 +39,13 @@ export default {
             })
         },
     },
+    computed: {
+        farToDeg() {
+            let far = Math.round(this.city.currentWeather.main.temp);
+            let deg = (far - 32)* 5/9;
+            return deg.toFixed(2);
+        }
+    }
 }
 </script>
 
