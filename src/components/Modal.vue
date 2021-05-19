@@ -1,8 +1,9 @@
 <template>
-  <div class="modal" ref="modal">
+  <div @click="closeModal" class="modal" ref="modal">
       <div class="modal-wrap" ref="modal-wrap">
           <label for="city-name">Enter the name of the city</label>
           <input type="text" name="city-name" placeholder="Search by city name" v-model="city" />
+          <button>Add</button>
       </div>
   </div>
 </template>
@@ -13,6 +14,13 @@ export default {
     data() {
         return {
             city: null,
+        }
+    },
+    methods: {
+        closeModal(e) {
+            if (e.target === this.$refs.modal) {
+            this.$emit("close-modal");
+            }
         }
     }
 }

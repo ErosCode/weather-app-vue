@@ -1,7 +1,7 @@
 <template>
   <div class="main">
-    <Modal v-if="modalOpen" />
-    <Navigation />
+    <Modal v-if="modalOpen" v-on:close-modal="toggleModal" />
+    <Navigation v-on:add-city="toggleModal" />
     <router-view v-bind:cities="cities" />
   </div>
 </template>
@@ -51,6 +51,9 @@ export default {
         })
       })
     },
+    toggleModal() {
+      this.modalOpen = !this.modalOpen;
+    }
   }
 }
 </script>
