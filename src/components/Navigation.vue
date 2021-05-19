@@ -6,7 +6,6 @@
                 <i class="far fa-edit"></i>
                 <i class="fas fa-sync"></i>
                 <i class="fas fa-plus"></i>
-
             </div>
         </nav>
     </header>

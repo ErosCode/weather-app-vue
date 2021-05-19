@@ -1,5 +1,6 @@
 <template>
   <div class="main">
+    <Modal v-if="modalOpen" />
     <Navigation />
     <router-view v-bind:cities="cities" />
   </div>
@@ -9,16 +10,19 @@
 import axios from 'axios';
 import db from "./firebase/firebaseinit";
 import Navigation from './components/Navigation';
+import Modal from './components/Modal';
 
 export default {
   name:"App",
   components: {
     Navigation,
+    Modal,
   },
   data() {
     return {
       APIkey: "f73f346a264f6fcc60077083eeb3e760",
-      cities: [],    
+      cities: [],
+      modalOpen: null,    
     }
   },
   created() {
