@@ -1,7 +1,7 @@
 <template>
   <div class="main">
     <Navigation />
-    <router-view/>
+    <router-view v-bind:cities="cities" />
   </div>
 </template>
 
