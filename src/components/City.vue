@@ -1,5 +1,6 @@
 <template>
     <div class="city">
+        <i v-if="edit" @click="removeCity" class="fa fa-trash-alt edit" ref="edit"></i>
         <span>{{ this.city.city }}</span>
         <div class="weather">
             <span>{{ Math.round(this.city.currentWeather.main.temp)}}&deg;</span>
@@ -13,12 +14,31 @@
 </template>
 
 <script>
+import db from "../firebase/firebaseinit";
+
 export default {
     name: "city",
-    props: ['city'],
-    created() {
-        console.log(this.city)
-    }
+    props: ['city', 'edit'],
+    created() {},
+    data() {
+        return {
+            id: null,
+        }
+    },
+    methods: {
+        removeCity() {
+            db.collection('cities').where('city', '==', `${this.city.city}`)
+            .get().then(docs => {
+                docs.forEach(doc => {
+                    this.id = doc.id;
+                });
+            }).then(() => {
+                db.collection('cities')
+                .doc(this.id)
+                .delete();
+            })
+        },
+    },
 }
 </script>
 
@@ -33,6 +53,17 @@ export default {
         color: #fff;
         box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
         
+        .edit {
+            border-radius: 0px 15px 0 0;
+            border: 10px solid rgb(77, 77, 77);
+            background-color: rgb(77 ,77 ,77);
+            z-index: 1;
+            font-size: 20px;
+            position: absolute;
+            bottom: 0px;
+            left: 0px;
+            color: rgb(223, 20, 20);
+        }
         span {
             z-index: 1;
             text-transform: capitalize;
