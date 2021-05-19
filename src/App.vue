@@ -1,6 +1,6 @@
 <template>
   <div class="main">
-    <Modal v-if="modalOpen" v-on:close-modal="toggleModal" />
+    <Modal v-if="modalOpen" v-on:close-modal="toggleModal" :APIkey="APIkey" />
     <Navigation v-on:add-city="toggleModal" />
     <router-view v-bind:cities="cities" />
   </div>

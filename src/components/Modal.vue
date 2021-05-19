@@ -3,23 +3,42 @@
       <div class="modal-wrap" ref="modal-wrap">
           <label for="city-name">Enter the name of the city</label>
           <input type="text" name="city-name" placeholder="Search by city name" v-model="city" />
-          <button>Add</button>
+          <button @click="addCity" >Add</button>
       </div>
   </div>
 </template>
 
 <script>
+import axios from "axios";
+import db from "../firebase/firebaseinit";
 export default {
     name: "modal",
+    props: ['APIkey'],
     data() {
         return {
-            city: null,
+            city: '',
         }
     },
     methods: {
         closeModal(e) {
             if (e.target === this.$refs.modal) {
             this.$emit("close-modal");
+            }
+        },
+        async addCity() {
+            if (this.city === '') {
+                alert('field cannot be empty');
+            } else {
+                const res = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${this.city}&units=imperial&appid=${this.APIkey}`);
+                const data = res.data;
+                db.collection('cities')
+                .doc()
+                .set({
+                    city: this.city,
+                    currentWeather: data,
+                }).then(() => {
+                    this.$emit("close-modal");
+                })
             }
         }
     }
