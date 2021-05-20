@@ -1,14 +1,27 @@
 <template>
-  <h4>Weather</h4>
+  <div class="main">
+    <div v-if="loading" class="loading">
+      <span></span>
+    </div>
+    <div v-else class="weather" :class="{ day: isDay, night: isNight }">
+      <div class="weather-wrap">
+        <CurrentWeather :isDay="isDay" :isNight="isNight" :currentWeather="currentWeather" />
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
 import axios from "axios";
 import db from '../firebase/firebaseinit';
+import CurrentWeather from "../components/CurrentWeather";
 
 export default {
     name: "Weather",
-    props: ['APIkey'],
+    props: ['APIkey', "isDay", "isnight"],
+    components: {
+        CurrentWeather,
+    },
     data() {
         return {
             forecast: null,
