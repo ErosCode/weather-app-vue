@@ -18,7 +18,7 @@ import CurrentWeather from "../components/CurrentWeather";
 
 export default {
     name: "Weather",
-    props: ['APIkey', "isDay", "isnight"],
+    props: ['APIkey', "isDay", "isNight"],
     components: {
         CurrentWeather,
     },
@@ -27,10 +27,14 @@ export default {
             forecast: null,
             currentWeather: null,
             loading: true,
+            currentTime: null,
         }
     },
     created() {
         this.getWeather();
+    },
+    beforeDestroy() {
+      this.$emit("resetDays");
     },
     methods: {
         getWeather() {
@@ -44,11 +48,22 @@ export default {
                     })
                     .then(() => {
                         this.loading = false;
-                        console.log(this.forecast, 'dgd', this.currentWeather)
+                        this.getCurrentTime();
                     })
                 })
             })            
-        }
+        },
+        getCurrentTime() {
+          const dateObj = new Date();
+          this.currentTime = dateObj.getHours();
+          const sunrise = new Date(this.currentWeather.sys.sunrise * 1000).getHours();
+          const sunset = new Date(this.currentWeather.sys.sunset * 1000).getHours();
+          if (this.currentTime > sunrise && this.currentTime < sunset) {
+            this.$emit('is-day');
+          } else {
+            this.$emit('is-night');
+          }
+        },
     }
 }
 </script>

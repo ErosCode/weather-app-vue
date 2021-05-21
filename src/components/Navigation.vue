@@ -1,5 +1,5 @@
 <template>
-    <header class="container add-city">
+    <header v-if="addCityActive" class="container add-city">
         <nav>
             <span>Add City</span>
             <div class="right">
@@ -9,11 +9,26 @@
             </div>
         </nav>
     </header>
+    <header v-else class="container" :class="{day: isDay, night: isNight}">
+        <nav>
+            <router-link class="router-link" :to="{name: 'AddCity'}">
+                <i class="fas fa-plus"></i>
+            </router-link>
+            <span>
+                {{ new Date().toLocaleString("en-us", { weekday: "short" }) }},
+                {{ new Date().toLocaleString("en-us", { month: "short" }) }}
+                {{ new Date().toLocaleString("en-us", { day: "2-digit" }) }}
+            </span>
+            <span>&deg;C</span>
+        </nav>
+
+    </header>
 </template>
 
 <script>
 export default {
     name: "Navigation",
+    props: ["addCityActive", "isDay", "isNight"],
     methods: {
         addCity() {
             this.$emit('add-city');
@@ -30,15 +45,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.add-city {
+    .add-city {
     background-color: #313640;
-}
-header {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    }
+    header {
     z-index: 99;
     position: fixed;
     max-width: 1024px;
     width: 100%;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.6);
     nav {
         display: flex;
         color: #fff;
@@ -48,11 +63,20 @@ header {
     .edit-active {
         color: rgba(210, 75, 75, 1);
     }
+    .router-link {
+        color: #fff;
+    }
     .right {
+        i {
+        font-size: 20px;
+        }
         i:nth-child(2),
         i:nth-child(3) {
-            margin-left: 16px;
+        margin-left: 16px;
         }
     }
-}
+    span {
+        font-weight: 600;
+    }
+    }
 </style>
