@@ -18,12 +18,13 @@
         <span class="feels-like">Feels like {{ Math.round(this.currentWeather.main.feels_like) }}&deg;</span>
       </div>
       <div class="weather-icon">
-        <img v-if="isDay" src="" alt="" />
-        <img v-if="isNight" src="" alt="" />
+        <img v-if="isDay" src="../../public/sun.png" alt="" />
+        <img v-if="isNight" src="../../public/moon.png" alt="" />
       </div>
     </div>
   </div>
 </template>
+
 
 <script>
 export default {
@@ -41,7 +42,7 @@ export default {
       min-height: 366px;
       position: relative;
       display: flex;
-      color: #fff;
+      color: black;
     }
     span {
       display: block;
