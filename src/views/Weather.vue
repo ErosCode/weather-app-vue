@@ -56,17 +56,18 @@ export default {
                 })
             })            
         },
-        getCurrentTime() {
-          const dateObj = new Date();
-          this.currentTime = dateObj.getHours();
-          const sunrise = new Date(this.currentWeather.sys.sunrise * 1000).getHours();
-          const sunset = new Date(this.currentWeather.sys.sunset * 1000).getHours();
-          if (this.currentTime > sunrise && this.currentTime < sunset) {
-            this.$emit('is-day');
-          } else {
-            this.$emit('is-night');
-          }
-        },
+      getCurrentTime() {
+        const dateObject = new Date();
+        this.currentTime = dateObject.getHours();
+        const sunrise = new Date(this.currentWeather.sys.sunrise * 1000).getHours();
+        const sunset = new Date(this.currentWeather.sys.sunset * 1000).getHours();
+        console.log('sunrise', sunrise ,'sunset', sunset)
+        if (this.currentTime > sunrise && this.currentTime < sunset) {
+          this.$emit("is-day");
+        } else {
+          this.$emit("is-night");
+        }
+      },
     }
 }
 </script>
