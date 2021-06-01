@@ -1,9 +1,23 @@
 <template>
   <div class="main">
     <Modal v-if="modalOpen" v-on:close-modal="toggleModal" :APIkey="APIkey" />
-    <Navigation v-on:add-city="toggleModal" v-on:edit-city="toggleEdit" :addCityActive="addCityActive" :isDay="isDay" :isNight="isNight" />
-    <router-view v-bind:cities="cities" v-bind:edit="edit" :APIkey="APIkey" v-on:is-day="dayTime" v-on:is-night="nightTime"       :isDay="isDay"
-      :isNight="isNight" v-on:resetDays="resetDays" />
+    <Navigation
+      v-on:add-city="toggleModal"
+      v-on:edit-city="toggleEdit"
+      :addCityActive="addCityActive"
+      :isDay="isDay"
+      :isNight="isNight"
+    />
+    <router-view
+      :isDay="isDay"
+      :isNight="isNight"
+      v-bind:cities="cities"
+      v-bind:edit="edit"
+      :APIkey="APIkey"
+      v-on:is-day="dayTime"
+      v-on:is-night="nightTime"
+      v-on:resetDays="resetDays"
+    />
   </div>
 </template>
 
@@ -42,7 +56,7 @@ export default {
           if (doc.type === "added" && !doc.doc.Nd) {
             try {
               const response = await axios.get(
-                `https://api.openweathermap.org/data/2.5/weather?q=${doc.doc.data().city}&units=imperial&appid=${this.APIkey}`
+                `https://api.openweathermap.org/data/2.5/weather?q=${doc.doc.data().city}&units=metric&appid=${this.APIkey}`
               );
               const data = response.data;
               firebaseDB.doc(doc.doc.id).update({

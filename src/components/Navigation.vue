@@ -15,9 +15,9 @@
                 <i class="fas fa-plus"></i>
             </router-link>
             <span>
-                {{ new Date().toLocaleString("en-us", { weekday: "short" }) }},
-                {{ new Date().toLocaleString("en-us", { month: "short" }) }}
-                {{ new Date().toLocaleString("en-us", { day: "2-digit" }) }}
+                {{ new Date().toLocaleString("fr-fr", { weekday: "short" }) }} ,
+                {{ new Date().toLocaleString("fr-fr", { month: "short" }) }}
+                {{ new Date().toLocaleString("fr-fr", { day: "2-digit" }) }}
             </span>
             <span>&deg;C</span>
         </nav>

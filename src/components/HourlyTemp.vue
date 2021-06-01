@@ -1,6 +1,6 @@
 <template>
   <div class="hour">
-    <span>{{ new Date(this.time.dt * 1000).toLocaleString("en-us", { hour: "numeric" }) }}</span>
+    <span>{{ new Date(this.time.dt * 1000).toLocaleString("fr-fr", { hour: "numeric" }) }}</span>
     <span>
       <img :src="require(`../../public/conditions/${this.time.weather[0].icon}.svg`)" alt="" />
     </span>

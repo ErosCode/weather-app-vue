@@ -7,6 +7,7 @@
       <div class="weather-wrap">
         <CurrentWeather :isDay="isDay" :isNight="isNight" :currentWeather="currentWeather" />
         <HourlyWeather :forecast="forecast" />
+        <WeeklyForecast :forecast="forecast" />
       </div>
     </div>
   </div>
@@ -17,6 +18,7 @@ import axios from "axios";
 import db from '../firebase/firebaseinit';
 import CurrentWeather from "../components/CurrentWeather";
 import HourlyWeather from "../components/HourlyWeather";
+import WeeklyForecast from "../components/WeeklyForecast";
 
 export default {
     name: "Weather",
@@ -24,6 +26,7 @@ export default {
     components: {
         CurrentWeather,
         HourlyWeather,
+        WeeklyForecast,
     },
     data() {
         return {
@@ -45,7 +48,7 @@ export default {
             .get().then((docs) => {
                 docs.forEach(doc => {
                     this.currentWeather = doc.data().currentWeather;
-                    axios.get(`https://api.openweathermap.org/data/2.5/onecall?lat=${doc.data().currentWeather.coord.lat}&lon=${doc.data().currentWeather.coord.lon}&exclude={part}&appid=${this.APIkey}`)
+                    axios.get(`https://api.openweathermap.org/data/2.5/onecall?lat=${doc.data().currentWeather.coord.lat}&lon=${doc.data().currentWeather.coord.lon}&exclude={part}&units=metric&appid=${this.APIkey}`)
                     .then(res => {
                         this.forecast = res.data;
                     })
